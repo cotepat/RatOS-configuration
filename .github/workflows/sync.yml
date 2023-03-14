@@ -1,3 +1,19 @@
+# .github/workflows/sync.yml
 name: Rebase Upstream
 uses: imba-tjd/rebase-upstream-action@0.5
-  
+on:
+  branches:
+    - v2.x-kilroy
+  schedule:
+    - cron: "0 0 * * 0"  # run once a week
+  workflow_dispatch:   # run manually
+    inputs:
+      branch: v2.x
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.x-kilroy
+      with:
+        fetch-depth: 50  # greater than the number of commits you made
